@@ -1,12 +1,13 @@
 from django import forms
 from DamianApp.models import Marca, Modelo, Auto, Vendedor
+import re 
 
 class MarcaForm(forms.ModelForm):
     class Meta:
         model = Marca
         fields = '__all__'
         widgets = {
-            'nombre': forms.TextInput(attrs={'class': 'form-control'}),
+            'nombre': forms.TextInput(attrs={'class': 'form-control', 'unique':True}), # <-- Corregido
             'logo': forms.FileInput(attrs={'class': 'form-control', 'accept': 'image/*'}),
             'descripcion': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
         }
@@ -44,8 +45,19 @@ class VendedorForm(forms.ModelForm):
         model = Vendedor
         fields = '__all__'
         widgets = {
-            'run': forms.TextInput(attrs={'class': 'form-control'}),
+            # 2. Actualizamos el widget para guiar al usuario
+            'run': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ej: 12345678-K'}),
             'nombre': forms.TextInput(attrs={'class': 'form-control'}),
             'email': forms.EmailInput(attrs={'class': 'form-control'}),
             'telefono': forms.TextInput(attrs={'class': 'form-control'}),
         }
+
+    def clean_run(self):
+        run = self.cleaned_data.get('run')
+        run_limpio = str(run).replace(".", "").upper()
+        patron = re.compile(r'^\d{7,8}-[\dK]$')
+
+        if not patron.match(run_limpio):
+            raise forms.ValidationError("Formato de RUT incorrecto. Debe ser 12345678-K (sin puntos, con guion).")
+        
+        return run_limpio
