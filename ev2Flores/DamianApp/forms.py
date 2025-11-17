@@ -7,7 +7,7 @@ class MarcaForm(forms.ModelForm):
         model = Marca
         fields = '__all__'
         widgets = {
-            'nombre': forms.TextInput(attrs={'class': 'form-control', 'unique':True}), # <-- Corregido
+            'nombre': forms.TextInput(attrs={'class': 'form-control', 'unique':True}), 
             'logo': forms.FileInput(attrs={'class': 'form-control', 'accept': 'image/*'}),
             'descripcion': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
         }
@@ -45,7 +45,6 @@ class VendedorForm(forms.ModelForm):
         model = Vendedor
         fields = '__all__'
         widgets = {
-            # 2. Actualizamos el widget para guiar al usuario
             'run': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ej: 12345678-K'}),
             'nombre': forms.TextInput(attrs={'class': 'form-control'}),
             'email': forms.EmailInput(attrs={'class': 'form-control'}),
@@ -60,4 +59,5 @@ class VendedorForm(forms.ModelForm):
         if not patron.match(run_limpio):
             raise forms.ValidationError("Formato de RUT incorrecto. Debe ser 12345678-K (sin puntos, con guion).")
         
+
         return run_limpio
