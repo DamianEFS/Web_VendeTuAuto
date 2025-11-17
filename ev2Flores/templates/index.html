@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="{% static 'img/logo_web.png' %}" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vende Tu Auto</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poller+One&display=swap" rel="stylesheet">
+    
+    <script src="{% static 'js/bootstrap.bundle.js' %}"></script>
+    <script src="{% static 'js/sweetalert2.js' %}"></script>
+
+    <style>
+    html, body {
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+        width: 100%;
+        overflow-x: hidden;
+    }
+
+    body {
+        background: url("{% static 'img/fondo_pagina.jpg' %}") no-repeat center center fixed;
+        background-size: cover;
+        position: relative;
+        min-height: 100vh;
+    }
+
+    body::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: -1;
+    }
+
+    .nav-link {
+        font-family: 'Share Tech', sans-serif;
+        font-size: 18px;
+        background-color: transparent; 
+    }
+    .navbar {
+        background-color: #222222; 
+    }
+    h1 {
+        font-family: 'Poller One', sans-serif;
+        text-shadow: 
+        -1px -1px 0 #ffffff,
+        1px -1px 0 #ffffff,
+        -1px 1px 0 #ffffff,
+        1px 1px 0 #ffffff;
+    }
+    </style>
+</head>
+
+<body>
+    
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+        <div class="container-fluid">
+            <ul class="navbar-nav">
+            <a class="navbar-brand" href="{% url 'inicio' %}">
+                <img src="{% static 'img/logo_web.png' %} " alt="Logo" style="width:40px;" class="rounded-pill">
+            </a>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'marcas' %}">Marcas</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'modelos' %}">Modelos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'autos' %}">Autos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'vendedores' %}">Vendedores</a>
+                </li>
+            </ul>
+
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link">Bienvenid@ {{ user.username }}</a>
+                </li>
+                <li class="nav-item">
+                    <form action="{% url 'logout' %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="nav-link btn btn-link">Cerrar Sesión</button>
+                    </form>
+                </li>
+            </ul>
+            </div>
+    </nav>
+    <div class="container mt-3">
+        {% block contenido %}
+        
+        <h1 class="alert alert-secondary-outliner text-primary display-1 mt-3 text-center">Vende Tu Auto</h1>
+        
+        <div class="position-fixed start-0 ms-4" style="top: 200px; width: 300px; z-index: 1000;">
+            <div class="card bg-transparent">
+                <div class="card-body"  style="background: rgba(56, 56, 56, 0.575);">
+                    <h3 class="card-title text-white mb-3" style="font-family: 'Poller One', sans-serif;">¿Quiénes Somos?</h3>
+                    <p class="card-text text-white">
+                        Somos Vende tu auto una web que te ayuda a vender tu vehículo de manera rápida y segura.
+                         <br>Tambien puedes ver los autos disponibles y la información del vendedor para una mayor transparencia.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div id="carouselAutos" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselAutos" data-bs-slide-to="0" class="active"></button>
+                <button type="button" data-bs-target="#carouselAutos" data-bs-slide-to="1"></button>
+                <button type="button" data-bs-target="#carouselAutos" data-bs-slide-to="2"></button>
+                <button type="button" data-bs-target="#carouselAutos" data-bs-slide-to="3"></button>
+            </div>
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="{% static 'img/auto.png' %}" class="d-block w-100" alt="Auto 1">
+                </div>
+                <div class="carousel-item">
+                    <img src="{% static 'img/auto2.png' %}" class="d-block w-100" alt="Auto 2">
+                </div>
+                <div class="carousel-item">
+                    <img src="{% static 'img/auto3.png' %}" class="d-block w-100" alt="Auto 3">
+                </div>
+                <div class="carousel-item">
+                    <img src="{% static 'img/auto4.png' %}" class="d-block w-100" alt="Auto 4">
+                </div>
+            </div>
+        </div>
+        
+        <style>
+        .card {
+            width: 750px;
+            height: 200px;
+            margin-top: 410px;
+            border-radius: 10px;
+            border: none;
+            margin-left: 275px;
+            margin-right: auto;
+        }
+        .card-title {
+            border-bottom: 2px solid #ffffff;
+            padding-bottom: 10px;
+        }
+        .card-text {
+            color: #fff; 
+            font-size: 1rem;
+            line-height: 1.5;
+            object-position: center;
+        }
+        #carouselAutos { 
+            width: 500px;
+            height: 500px;
+            margin-top: 100px;
+            margin-left: auto;
+            margin-right: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .carousel-item img {
+            width: 800px;
+            height: 500px;
+            object-fit: cover;
+            object-position: center;
+            margin-bottom: 20px;
+            touch-action: pan-y pinch-zoom;
+        }
+        </style>
+        
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                new bootstrap.Carousel(document.querySelector('#carouselAutos'), { 
+                    interval: 3000,
+                    touch: true 
+                });
+            });
+        </script>
+
+        {% endblock %}
+    </div>
+</body>
+</html>

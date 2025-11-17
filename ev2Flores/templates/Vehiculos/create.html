@@ -1,0 +1,39 @@
+{% extends 'index.html' %}
+{% load static %} 
+{% block contenido %}
+
+{% if messages %}
+{% for msj in messages %}
+    <script>
+        Swal.fire({
+            title: '¡Éxito!',
+            text: '{{ msj }}',
+            icon: 'success'
+        }).then(()=>{
+            window.location.href = '{{ ruta }}';
+        });
+    </script>    
+{% endfor %}
+{% endif %}
+    
+<h1 class="alert alert-primary text-center mt-3">{{ titulo }}</h1>
+        
+        <style>
+        .create-form label,
+        .create-form .form-label {
+                color: #fff !important;
+                font-weight: 700 !important; 
+        }
+        </style>
+    
+    <form method="post" class="create-form">
+        {% csrf_token %}
+        {{ form}}
+        <div class="text-center mt-3">
+            <input type="reset" value="Limpiar" class="btn btn-outline-info">
+            <input type="submit" value="Guardar" class="btn btn-success">
+        </div>
+    </form>
+    
+    <a href="{{ ruta }}" class="btn btn-light text-dark">Volver</a>
+{% endblock %}
